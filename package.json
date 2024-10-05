@@ -1,0 +1,31 @@
+{
+  "name": "receba-delivery-api",
+  "version": "1.0.0",
+  "description": "delivery app",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "dev": "babel-watch src/index.js  --clear-console",
+    "migrate": "knex --knexfile src/db/knexfile.js migrate:latest",
+    "migrate:make": "knex --knexfile src/db/knexfile.js  migrate:make",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "Paulo Herbert",
+  "license": "ISC",
+  "dist": {},
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "knex": "^3.1.0",
+    "nodemon": "^3.1.7",
+    "pg": "^8.13.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.7",
+    "@babel/core": "^7.25.7",
+    "@babel/preset-env": "^7.25.7",
+    "babel-watch": "^7.8.1"
+  }
+}
