@@ -1,24 +1,33 @@
-require("dotenv").config({path:"../../.env"});
-const config = process.env;
-const conf = {
-  client: "pg",
-  connection: {
-    host: config.DB_HOST,
-    port: config.DB_PORT,
-    user: config.DB_USER,
-    database: config.DB_NAME,
-    password: config.DB_PASSWORD,
-  },
-  migrations: {
-    tableName: "knex_migrations",
-    directory: "./migrations"
-  },
-  debug: true,
-}
-console.log(conf)
+const { env } = require("../config")
 
-//const pg = require("knex")(conf);
+const config = {
+  development: {
+    client: "pg",
+    connection: {
+      host: env.DB_HOST,
+      port: env.DB_PORT,
+      user: env.DB_USER,
+      database: env.DB_NAME,
+      password: env.DB_PASSWORD,
+    },
+    migrations: {
+      tableName: "knex_migrations",
+      directory: "./migrations",
+    },
+    debug: true,
+  },
+  test: {
+    client: "pg",
+    connection: {
+      host: env.DB_HOST,
+      port: env.DB_PORT,
+      user: env.DB_USER,
+      database: env.DB_NAME,
+      password: env.DB_PASSWORD,
+    },
+  }
+};
 
-module.exports ={
-  development:conf
-}
+module.exports = {
+  ...config
+};

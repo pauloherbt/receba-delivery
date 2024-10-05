@@ -1,3 +1,3 @@
-const config = process.env;
-
-module.exports.config = conf;
+require("dotenv").config({ path: "../../.env"});
+const env = process.env;
+module.exports = {env};
