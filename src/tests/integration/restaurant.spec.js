@@ -11,6 +11,10 @@ describe("restaurant creation", () => {
     // Iniciar uma nova transação antes de cada teste
     await qb("restaurant").delete();
   });
+  
+  afterAll(async ()=>{
+    await qb.destroy();
+  })
 
   test("should create a  new Restaurant", async () => {
     const mockedRestaurant = {
@@ -21,6 +25,20 @@ describe("restaurant creation", () => {
     const restRepo = new RestaurantRepository();
     const result = await restRepo.createRestaurant(mockedRestaurant);
     expect(result).toBeDefined();
-    expect(result[0]).toHaveProperty("id");
+    expect(result).toHaveProperty("id");
+  });
+
+  test("should not  create a  new Restaurant when invalid fields", async () => {
+    const mockedRestaurant = {
+      address: "Rua Antunino Cunha - Bela Vista",
+      image_url: "https://google.com",
+    };
+    const restRepo = new RestaurantRepository();
+    try{
+      await restRepo.createRestaurant(mockedRestaurant)
+    }
+    catch(err){
+      expect(err).toBeDefined();
+    }
   });
 });
