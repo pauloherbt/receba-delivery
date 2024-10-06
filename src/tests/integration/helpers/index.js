@@ -1,4 +1,5 @@
 import { CategoryRepository } from "../../../domain/repositories/category-repository";
+import { ProductRepository } from "../../../domain/repositories/product-repository";
 import { RestaurantRepository } from "../../../domain/repositories/restaurant-repository";
 
 export async function createRestaurant(mockedRestaurant) {
@@ -12,4 +13,7 @@ export async function createRestaurant(mockedRestaurant) {
 
 export async function createCategory(mockedCategory) {
   return await new CategoryRepository().create(mockedCategory);
+}
+export async function createProduct(mockedProduct) {
+  return await new ProductRepository().create(mockedProduct);
 }
