@@ -2,6 +2,6 @@ import qb from "../../../db";
 
 export class RestaurantRepository{
     async createRestaurant(data) {
-        return await qb('restaurant').insert(data,"id");
+        return (await qb('restaurant').insert(data,"id"))[0];
     }
 }
