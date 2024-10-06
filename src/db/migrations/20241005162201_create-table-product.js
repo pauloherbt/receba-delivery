@@ -10,10 +10,8 @@ exports.up = async function(knex) {
     tb.string('image_url').nullable();
     tb.timestamps(true,true);
     tb.string("internal_code").nullable();
-    tb.uuid('restaurant_id').notNullable();
-    tb.uuid('category_id').notNullable();
-    tb.foreign("restaurant_id").references("restaurant.id");
-    tb.foreign("category_id").references("category.id");
+    tb.uuid('restaurant_id').notNullable().references("restaurant.id").onDelete('CASCADE');;
+    tb.uuid('category_id').notNullable().references("category.id").onDelete("CASCADE");
   })
 };
 
@@ -22,5 +20,5 @@ exports.up = async function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = async function(knex) {
-  await knex.schema.dropTable("product");
+  await knex.schema.dropTableIfExists("product");
 };

@@ -7,8 +7,7 @@ exports.up = async function (knex) {
     tb.uuid("id",{primaryKey:true}).defaultTo(knex.fn.uuid());
     tb.string("name").notNullable();
     tb.timestamps({useTimestamps:true,defaultToNow:true});
-    tb.uuid("restaurant_id").notNullable();
-    tb.foreign("restaurant_id").references("restaurant.id");
+    tb.uuid("restaurant_id").notNullable().references("restaurant.id").onDelete("CASCADE");
   });
 };
 
@@ -17,5 +16,5 @@ exports.up = async function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = async function (knex) {
-  await knex.schema.dropTable("category");
+  await knex.schema.dropTableIfExists("category");
 };

@@ -25,6 +25,11 @@ const config = {
       database: env.DB_NAME,
       password: env.DB_PASSWORD,
     },
+    migrations: {
+      tableName: "knex_migrations",
+      directory: "src/db/migrations",
+    },
+    debug:false,
   }
 };
 
