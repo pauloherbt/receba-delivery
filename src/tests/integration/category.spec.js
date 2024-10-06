@@ -1,6 +1,6 @@
 import qb from "../../db";
 import { CategoryRepository } from "../../domain/repositories/category-repository";
-import { createRestaurant } from "./helpers";
+import { createCategory, createProduct, createRestaurant } from "./helpers";
 import { afterAll, afterEach, beforeAll, expect } from "@jest/globals";
 
 describe("category creation", () => {
@@ -9,8 +9,8 @@ describe("category creation", () => {
   });
 
   afterEach(async () => {
-    // Iniciar uma nova transação antes de cada teste
     await qb("category").delete();
+    await qb("restaurant").delete();
   });
   afterAll(async () => {
     await qb.destroy();
@@ -41,4 +41,25 @@ describe("category creation", () => {
     }
     expect(result).toBeUndefined();
   });
+
+  test("should delete a category with products attached", async () => {
+    const restaurant = await createRestaurant();
+    const mockedCategory = {
+      name: "Outros",
+      restaurant_id: restaurant.id,
+    };
+    const createdCategory = await createCategory(mockedCategory);
+    const mockedProduct = {
+      name:"Pastel",
+      value:50,
+      restaurant_id:restaurant.id,
+      category_id: createdCategory.id
+    }
+    const createdProduct = await createProduct(mockedProduct);
+    await new CategoryRepository().delete(createdCategory.id);
+    expect(await qb('category').select('id').where({id:createdCategory.id})).toEqual([]);
+    expect(await qb('product').select('id').where({id:createdProduct.id})).toEqual([]);
+    expect(await qb('restaurant').select('id').where({id:restaurant.id}));
+  });
+
 });
